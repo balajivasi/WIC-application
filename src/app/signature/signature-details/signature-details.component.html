@@ -1,0 +1,17 @@
+<div id="content" class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">{{ PageData.DocName }}</h3>
+    </div>
+    <div class="card-body">
+        <div [innerHTML] = "PageData.Document" ></div>
+        <div *ngIf="PageData.SignatureDoc;else SignaturePad"><img src="{{'data:image/jpg;base64,' + PageData.SignatureDoc}}" /></div>
+        <ng-template #SignaturePad>
+            <div>
+                <canvas #signPadCanvas (touchstart)="startSignPadDrawing($event)" (touchmove)="movedFinger($event)"></canvas>
+                <button class="btn btn-success" color="secondary" (click)="saveSignPad()">Save</button>
+                <button class="btn btn-danger" (click)="clearSignPad()">Clear</button>
+            </div>
+        </ng-template>
+        
+    </div>
+</div>

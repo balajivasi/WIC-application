@@ -1,0 +1,83 @@
+<div id="content" class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">{{ PageName }}</h3>
+    </div>
+    <div class="card-body">
+        <div *ngIf="removeCardMessage" class="alert alert-success" role="alert">
+            You are Card Has been removed successfully
+        </div>
+        <div *ngIf="CardDefaultMessage" class="alert alert-success" role="alert">
+            You are Card Has been removed successfully
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{errorMessage}} <br /> Please logout and
+            login
+            back.
+            Redirecting to login page in 10seconds</div>
+        <button type="button" class="btn btn-primary btn-lg px-4" routerLink="/ManageEBTAccount/Cards"
+            [queryParams]="{ page: 'add' }">Add Card</button>
+        <div class="mt-20">
+            <div class="card mb-3 " *ngFor="let ebt of EBTAccounts?.ServiceResponse"
+                [ngClass]="(ebt.defaultcard == 1)? 'bg-success text-white' :(ebt.Verify== 0)? 'bg-danger text-white' :'bg-light'">
+                <div class="card-header" [ngClass]="{'bg-warning' : (ebt.Card == EBTCard && ebt.defaultcard != 1) }">
+                    {{ ebt.nickName? ebt.nickName : ebt.Card }}
+                    <div class="pull_right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-check-lg mr-20" viewBox="0 0 16 16" *ngIf="ebt.Card == EBTCard && ebt.defaultcard != 1">
+                            <path
+                                d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                        </svg>
+                        <button data-dismiss="alert" (click)="ManageAccount(ebt.Card,'remove')"
+                            data-target="#closeablecard" type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body"
+                    (click)="((ebt.Verify == 1) && (ebt.Card != EBTCard))? selectAccount(ebt.Card) : ''">
+                    <h6 class="card-title">{{ ebt.Card }}</h6>
+                    <p><span *ngIf="ebt.defaultcard == 1">Default card and</span> {{ (ebt.Verify == 1) ? 'Verified' :
+                        'Not Verified'}} </p>
+                </div>
+                <div class="card-footer row m-0">
+                    <div class="pull_left cursor-pointer col-sm" (click)="ManageAccount(ebt.Card,'remove')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash" viewBox="0 0 16 16">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg> Remove
+                    </div>
+                    <div class="pull_left cursor-pointer col-sm" *ngIf="ebt.Verify == 1"
+                        [ngClass]="(ebt.defaultcard == 1 && ebt.Verify == 1) ? 'text-right' : 'text-center'"
+                        routerLink="/ManageEBTAccount/Cards" [queryParams]="{ page: 'Nickname',card: ebt.Card }">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-pen" viewBox="0 0 16 16">
+                            <path
+                                d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                        </svg> Edit Nickname
+                    </div>
+                    <div class="pull_right cursor-pointer col-sm text-right"
+                        *ngIf="(ebt.defaultcard != 1 && ebt.Verify == 1) " (click)="ManageAccount(ebt.Card,'default')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-person-check" viewBox="0 0 16 16">
+                            <path
+                                d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                            <path
+                                d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
+                        </svg> Make Default
+                    </div>
+                    <div *ngIf="ebt.Verify != 1" class="pull_right cursor-pointer col-sm text-right"
+                        routerLink="/ManageEBTAccount/Cards" [queryParams]="{ page: 'verify',card: ebt.Card }">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-check" viewBox="0 0 16 16">
+                            <path
+                                d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+                        </svg>Verify
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-lg px-4">{{ EBTCard }}</button>
+    </div>
+</div>

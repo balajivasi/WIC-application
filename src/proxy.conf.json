@@ -1,0 +1,11 @@
+{
+    "/api": {
+      "target": "https://abcdefgh.com",
+      "secure": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/MobilePublicService/WCCMobilePublicService.svc/json"
+      }
+    }
+  }
+  

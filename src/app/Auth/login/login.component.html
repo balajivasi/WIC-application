@@ -1,0 +1,44 @@
+<div id="content">
+  <div class="headerImage"><img src="../assets/Images/EbtCard.jpg" class="img-fluid" /></div>
+  <div ngClass="mx-auto col-11 col-md-8 col-lg-6 mt-10">
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{errorMessage}}</div>
+    <form #loginForm=ngForm (ngSubmit)='onSubmitLogin(loginForm.value)'>
+      <div class="form-group">
+        <label for="LoginEmail">Email address</label>
+        <input type="email" class="form-control" id="LoginEmail" #LoginEmail='ngModel' name="LoginEmail" required
+          ngModel LoginEmail [ngClass]="{'is-invalid': LoginEmail.touched && LoginEmail.invalid}"
+          placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="LoginPassword">Password</label>
+        <input type="password" class="form-control" id="LoginPassword" #LoginPassword='ngModel' name="LoginPassword"
+          ngModel required [ngClass]="{'is-invalid': LoginPassword.touched && LoginPassword.invalid}"
+          placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg px-4" [disabled]="loginForm.invalid">Login</button>
+      <div class="d-grid gap-2 mb-20 pl-5 pr-5 d-flex justify-content-sm-center">
+        <div class="col-6"><button type="button" class="btn btn-primary btn-lg"
+            [routerLink]="['/Register']">Register</button></div>
+        <div class="col-6"><button type="button" class="btn btn-primary btn-lg"
+            [routerLink]="['/ForgotPassword']">Forgot Password</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="row m-0 bordertop">
+    <div class="col-4" [routerLink]="['/Clinic']">
+      <div class="BenefitsIcon"><img src="../../assets/Images/Clinic.png" /></div>
+      Clinics
+    </div>
+    <div class="col-4 pt-20 pb-20 borderLeftRight" [routerLink]="['/Stores']">
+      <div class="BenefitsIcon"><img src="../../assets/Images/stores.png" /></div>
+      Stores
+    </div>
+    <div class="col-4" [routerLink]="['/ResourceLink']">
+      <div class="BenefitsIcon"><img src="../../assets/Images/Resources.png" /></div>
+      Resource Links</div>
+  </div>
+</footer>

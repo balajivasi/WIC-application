@@ -1,0 +1,13 @@
+<div id="content" class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">{{ PageName }}</h3>
+    </div>
+    <div class="card-body">
+        <div *ngIf="notifications">
+            <p *ngFor="let notification of notifications">
+                {{notification.Message}}
+            </p>
+        </div>
+        <button type="button" class="btn btn-secondary btn-lg px-4">{{ EBTCard }}</button>
+    </div>
+</div>

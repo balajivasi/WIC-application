@@ -1,0 +1,33 @@
+<div id="content" class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">{{ PageName }}</h3>
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="success">
+        {{success}}
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+        {{errorMessage}}
+    </div>
+    <div class="card-body">
+        <form #Feedback="ngForm" (ngSubmit)='onSubmitFeedback(Feedback.value);Feedback.reset()'>
+            <div class="form-group">
+                <label for="FeedBackType">Reason</label>
+                <select class="form-control" id="FeedBackType" name="FeedBackType" #FeedBackType="ngModel" ngModel
+                    required [ngClass]="{'is-invalid': FeedBackType.touched && FeedBackType.invalid}">
+                    <option value="New Feature">New feature</option>
+                    <option value="Existing feture">Existing feture</option>
+                    <option value="Suggestion" selected="selected">Suggestion</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="FeedBackText">Description:</label>
+                <textarea class="form-control" id="FeedBackText" rows="3" ngModel required name="FeedBackText"
+                    #FeedBackText="ngModel"
+                    [ngClass]="{'is-invalid': FeedBackText.touched && FeedBackText.invalid}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg px-4" [disabled]="Feedback.invalid">Submit</button>
+        </form>
+    </div>
+</div>

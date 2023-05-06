@@ -1,0 +1,44 @@
+<div id="content" class="card card-outline-secondary">
+  <div class="card-header">
+    <h3 class="mb-0">{{ PageName }}</h3>
+  </div>
+  <div class="alert alert-success" role="alert" *ngIf="success">
+    {{ success }}
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
+  <div class="card-body">
+    <form #cardForm="ngForm" (ngSubmit)='onSubmitCard(cardForm.value);cardForm.reset();'>
+      <ng-template [ngIf]="PageName != 'Update Nickname'">
+        <div class="form-group">
+          <label for="EBTCard">WIC EBT Card Number</label>
+          <input type="number" class="form-control" id="EBTCard" name="EBTCard" #EBTCard="ngModel" required ngModel
+            onkeypress="if (this.value.length > 15) return false;" EBTCard maxlength="16" pattern="[0-9]{16}"
+            [ngClass]="{'is-invalid': EBTCard.touched && EBTCard.invalid}" placeholder="Enter WIC EBT Card Number">
+        </div>
+        <div class="form-group">
+          <label for="BirthDate">AR Birth Date in (mm/dd/yyyy) format</label>
+          <input type="text" class="form-control" name="BirthDate" required ngModel BirthDate #BirthDate="ngModel"
+            [(ngModel)]="formattedDate" id="BirthDate"
+            [ngClass]="{'is-invalid': BirthDate.touched && BirthDate.invalid}"
+            placeholder="Enter AR Birth Date in (mm/dd/yyyy) format ">
+        </div>
+        <div class="form-group">
+          <label for="ZipCode">AR Mailing Address Zip Code</label>
+          <input type="text" class="form-control" name="ZipCode" required ngModel ZipCode #ZipCode="ngModel"
+            id="ZipCode" inputmode="numeric" maxlength="5" pattern="[0-9]{5}"
+            [ngClass]="{'is-invalid': ZipCode.touched && ZipCode.invalid}"
+            placeholder="Enter AR Mailing Address Zip Code">
+        </div>
+      </ng-template>
+      <div class="form-group" *ngIf="PageName !='Verify EBT Card' ">
+        <label for="NickName">Card Nickname (Optional)</label>
+        <input type="text" class="form-control" name="NickName" ngModel NickName #NickName="ngModel" id="NickName"
+          [ngClass]="{'is-invalid': NickName.touched && NickName.invalid}" placeholder="Enter NickName for this card">
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg px-4" [disabled]="cardForm.invalid">Confirm</button>
+    </form>
+  </div>
+</div>

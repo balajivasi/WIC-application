@@ -1,0 +1,39 @@
+<div id="content" class="card card-outline-secondary">
+  <div class="card-header">
+    <h3 class="mb-0">{{ PageName }}</h3>
+  </div>
+  <div class="card-body benefitscards">
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" routerLinkActive="active" [routerLink]="['/Benefits']">Current</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/Future']">Future</a>
+      </li>
+    </ul>
+    <div class="subMenu">
+      <nav class="nav nav-pills nav-fill">
+        <a class="nav-item nav-link" *ngFor="let benefitsList of benefitsLists; let i = index" [attr.data-index]="i"
+          (click)="FutureBenefits(benefitsList,i)" [ngClass]="benefitsList.class">
+          {{ benefitsList.IssueMonth }}/{{ benefitsList.IssueYear }}
+        </a>
+      </nav>
+    </div>
+    <div class="NoData" *ngIf="noBenefits">
+      <img src="../../../assets/Images/sign_triangle_icon.png" /><br />
+      no Benefits assigned.
+    </div>
+    <div class="card-group row">
+      <div class="col-sm-4" *ngFor="let Benefit of futureBenefits.ServiceResponse">
+        <div class="card text-white bg-info" (click)="lightBox(Benefit.ContentFile)">
+          <span class="text-center">
+            <img src='../../../assets/Benefits/{{Benefit.IconImage}}' class="card-img-top">
+            <span>{{ Benefit.RemainingQuantity }} {{Benefit.FoodPackageSize}}</span>
+          </span>
+          <h6 class="card-title">{{Benefit.FoodShoppingListDescription}}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-light-box *ngIf="ContentFile" (close)="closeOverlay()" [ImageUrl]="ContentFile"></app-light-box>

@@ -1,0 +1,28 @@
+<div id="content" class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">{{ PageName }}</h3>
+    </div>
+    <div class="alert alert-success mt-10" role="alert" *ngIf="success">
+        {{ success }}
+    </div>
+    <div class="alert alert-danger mt-10" role="alert" *ngIf="errorMessage">
+        {{errorMessage}}
+    </div>
+    <div class="card-body">
+        <p>A new code was sent to the email address that you provided. Please enter that code to verify your email.</p>
+        <form #VerifyForm=ngForm (ngSubmit)='onSubmitVerify(VerifyForm.value)'>
+            <div class="form-group">
+                <label for="OtpCode">Confirmation Code</label>
+                <input type="text" class="form-control" id="OtpCode" name="OtpCode" #OtpCode="ngModel" required
+                    ngModel OtpCode maxlength="4" pattern="[0-9]{4}"
+                    [ngClass]="{'is-invalid': OtpCode.touched && OtpCode.invalid}"
+                    placeholder="Enter Confirmation Code">
+            </div>
+            {{ timeRemaining$ | async | date:'mm:ss' }}
+            <div class="d-grid gap-2 mb-20 pl-5 pr-5 d-flex justify-content-sm-center">
+                <div class="col-6"><button type="submit" class="btn btn-primary btn-lg" [disabled]="VerifyForm.invalid">Verify</button></div>
+                <div class="col-6"><button type="button" class="btn btn-primary btn-lg" (click)="ResendOTP()">Resend</button></div>
+            </div>
+        </form>
+    </div>
+</div>

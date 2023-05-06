@@ -1,0 +1,16 @@
+.calendarIcon{
+    width: 70px;
+    margin: auto;
+    border: 1px solid #544f4f;
+    border-radius: 3px;
+}
+.calendarIcon span.month{
+    background-color: #f00;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+    line-height: 20px;
+}
+.calendarIcon span.day{
+    font-size: 25px;
+}

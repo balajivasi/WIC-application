@@ -1,0 +1,93 @@
+<div id="content" class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">Register</h3>
+    </div>
+    <div class="alert alert-success mt-10" role="alert" *ngIf="success">
+        {{ success }}
+    </div>
+    <div class="alert alert-danger mt-10" role="alert" *ngIf="errorMessage">
+        {{errorMessage}}
+    </div>
+    <div class="card-body">
+        <form [formGroup]="RegisterForm" (ngSubmit)="Register(RegisterForm.value);">
+
+            <div class="form-group">
+                <label for="LoginEmail">Email address</label>
+                <input type="email" placeholder="Enter Email Address" class="form-control" formControlName="LoginEmail">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+            </div>
+            <ng-container *ngFor="let error of error_messages.LoginEmail">
+                <div class="alert alert-danger"
+                    *ngIf="RegisterForm.get('LoginEmail')?.hasError(error.type) && (RegisterForm.get('LoginEmail')?.dirty || RegisterForm.get('LoginEmail')?.touched)">
+                    {{ error.message }}
+                </div>
+            </ng-container>
+            <div class="form-group">
+                <label>Password*</label>
+                <input class="form-control" formControlName="LoginPassword" placeholder="Enter Password"
+                    type="password" />
+            </div>
+            <ng-container *ngFor="let error of error_messages.LoginPassword">
+                <div class="alert alert-danger"
+                    *ngIf="RegisterForm.get('LoginPassword')?.hasError(error.type) && (RegisterForm.get('LoginPassword')?.dirty || RegisterForm.get('LoginPassword')?.touched)">
+                    {{ error.message }}
+                </div>
+            </ng-container>
+            <div class="form-group">
+                <label>Confirm Password*</label>
+                <input class="form-control" formControlName="confirmpassword" placeholder="Enter Confirm Password"
+                    type="password" />
+            </div>
+            <ng-container *ngFor="let error of error_messages.confirmpassword">
+                <div class="alert alert-danger"
+                    *ngIf="RegisterForm.get('confirmpassword')?.hasError(error.type) && (RegisterForm.get('confirmpassword')?.dirty || RegisterForm.get('confirmpassword')?.touched)">
+                    {{ error.message }}
+                </div>
+            </ng-container>
+            <div class="alert alert-danger" *ngIf="RegisterForm.errors">
+                New Password and confirm password didn't match
+            </div>
+            <div class="form-group">
+                <label for="EBTCard">WIC EBT Card Number</label>
+                <input type="number" class="form-control" formControlName="EBTCard"
+                    onkeypress="if (this.value.length > 15) return false;" EBTCard maxlength="16"
+                    placeholder="Enter WIC EBT Card Number">
+            </div>
+            <ng-container *ngFor="let error of error_messages.EBTCard">
+                <div class="alert alert-danger"
+                    *ngIf="RegisterForm.get('EBTCard')?.hasError(error.type) && (RegisterForm.get('EBTCard')?.dirty || RegisterForm.get('EBTCard')?.touched)">
+                    {{ error.message }}
+                </div>
+            </ng-container>
+            <div class="form-group">
+                <label for="BirthDate">AR Birth Date in (mm/dd/yyyy) format</label>
+                <input type="date" class="form-control" name="BirthDate" formControlName="BirthDate" id="BirthDate"
+                    placeholder="Enter AR Birth Date in (mm/dd/yyyy) format ">
+            </div>
+            <ng-container *ngFor="let error of error_messages.BirthDate">
+                <div class="alert alert-danger"
+                    *ngIf="RegisterForm.get('BirthDate')?.hasError(error.type) && (RegisterForm.get('BirthDate')?.dirty || RegisterForm.get('BirthDate')?.touched)">
+                    {{ error.message }}
+                </div>
+            </ng-container>
+            <div class="form-group">
+                <label for="ZipCode">AR Mailing Address Zip Code</label>
+                <input type="text" class="form-control" name="ZipCode" inputmode="numeric" maxlength="5"
+                    formControlName="ZipCode" placeholder="Enter AR Mailing Address Zip Code">
+            </div>
+            <ng-container *ngFor="let error of error_messages.ZipCode">
+                <div class="alert alert-danger"
+                    *ngIf="RegisterForm.get('ZipCode')?.hasError(error.type) && (RegisterForm.get('ZipCode')?.dirty || RegisterForm.get('ZipCode')?.touched)">
+                    {{ error.message }}
+                </div>
+            </ng-container>
+            <div class="form-group">
+                <label for="NickName">Nickname (Optional)</label>
+                <input type="text" class="form-control" formControlName="NickName" name="NickName" id="NickName"
+                    placeholder="Enter NickName for this card">
+            </div>
+            <button class="form-control btn btn-primary" [disabled]="!RegisterForm.valid">Signup</button>
+        </form>
+    </div>
+</div>

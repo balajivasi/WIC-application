@@ -1,0 +1,30 @@
+.LightBox{
+    position: absolute;
+    top: -67px;
+    left: 0;
+    width: 100%;
+}
+.modalData{
+    width: 70%;
+    margin: auto;
+}
+.overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
+.overlay .close{
+    float: right;
+    color: #fff;
+    line-height: 20px;
+    font-size: 40px;
+    cursor: pointer;
+    margin-top: 20px;
+}
